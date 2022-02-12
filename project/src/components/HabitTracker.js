@@ -1,6 +1,10 @@
 import React from "react";
+import { Redirect } from "react-router-dom";
 
-function HabitTracker() {
+function HabitTracker({ authorized }) {
+  if (!authorized) {
+    return <Redirect to="/"></Redirect>;
+  }
   return (
     <div>
       <h2>HabitTracker</h2>

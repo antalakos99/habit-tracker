@@ -7,8 +7,10 @@ import HabitTracker from "./components/HabitTracker";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { useGlobalState } from "./components/Login";
 
 function App() {
+  let authorized = useGlobalState("authorized");
   return (
     <Provider store={store}>
       <Router>
@@ -20,13 +22,13 @@ function App() {
             <Register />
           </Route>
           <Route path="/habits">
-            <Habits />
+            <Habits authorized={authorized} />
           </Route>
           <Route path="/userprofile">
-            <UserProfile />
+            <UserProfile authorized={authorized} />
           </Route>
           <Route path="/habittracker">
-            <HabitTracker />
+            <HabitTracker authorized={authorized} />
           </Route>
           <Route path="*">
             <Login />
