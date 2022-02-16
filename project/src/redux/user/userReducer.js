@@ -20,30 +20,22 @@ export const userReducer = (state = initialState, action) => {
       };
     case UPDATE_USER_FIRST_NAME:
       return {
+        ...state,
         firstName: action.payload.fname,
-        lastName: state.lname,
-        age: state.age,
-        profilePicture: state.proPic,
       };
     case UPDATE_USER_LAST_NAME:
       return {
-        firstName: state.fname,
+        ...state,
         lastName: action.payload.lname,
-        age: state.age,
-        profilePicture: state.proPic,
       };
     case UPDATE_USER_AGE:
       return {
-        firstName: state.fname,
-        lastName: state.lname,
+        ...state,
         age: action.payload.age,
-        profilePicture: state.proPic,
       };
     case UPDATE_USER_PROFILE_PICTURE:
       return {
-        firstName: state.fname,
-        lastName: state.lname,
-        age: state.age,
+        ...state,
         profilePicture: action.payload.proPic,
       };
     default:
