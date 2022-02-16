@@ -1,22 +1,26 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { addHabit } from "../redux";
-import { updateHabit } from "../redux";
 import { List, ListItem, TextField, Button } from "@mui/material";
+import Header from "./Header";
+import SideBar from "./SideBar";
 
-function Habits({ authorized, habits, addHabit }) {
+function Habits({ authorized, habits, addHabit, user }) {
   const [name, setName] = useState("");
   // if (!authorized) {
   //   return <Redirect to="/"></Redirect>;
   // }
   console.log(name);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addHabit("name");
-  };
+  const page = "Habits";
   return (
     <div>
+      <Header
+        page={page}
+        firstName={user.firstName}
+        lastName={user.lastName}
+        profilePicture={user.profilePicture}
+      />
+      <SideBar />
       <TextField
         id="newHabit"
         label="New Habbit:"
@@ -47,6 +51,7 @@ function Habits({ authorized, habits, addHabit }) {
 const mapStateToProps = (state) => {
   return {
     habits: state.habits,
+    user: state.user,
   };
 };
 
