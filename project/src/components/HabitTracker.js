@@ -1,17 +1,38 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { updateHabit } from "../redux";
+import {
+  setHabits,
+  setUser,
+  updateHabit,
+  updateHabitsDataBase,
+} from "../redux";
 import { Table, TableCell, TableRow, Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 
-function HabitTracker({ authorized, habits, updateHabit, user }) {
+function HabitTracker({
+  authorized,
+  habits,
+  updateHabit,
+  user,
+  id,
+  setHabits,
+  setUser,
+}) {
+  const dispatch = useDispatch();
   // if (!authorized) {
   //   return <Redirect to="/"></Redirect>;
   // }
   const page = "Habit Tracker";
+  useEffect(() => {
+    axios.get(`http://localhost:3004/users/${id}`).then((res) => {
+      setHabits(res.data.habits);
+      setUser(res.data.user);
+    });
+  }, []);
   return (
     <div>
       <Header
@@ -53,7 +74,7 @@ function HabitTracker({ authorized, habits, updateHabit, user }) {
                     <TableCell
                       className="tc"
                       key={index}
-                      onClick={() =>
+                      onClick={() => {
                         updateHabit(
                           habit.name,
                           index,
@@ -61,8 +82,9 @@ function HabitTracker({ authorized, habits, updateHabit, user }) {
                           day === ""
                             ? (habit.completed += 1)
                             : (habit.completed -= 1)
-                        )
-                      }
+                        );
+                        dispatch(updateHabitsDataBase());
+                      }}
                     >
                       {day}
                     </TableCell>
@@ -81,6 +103,7 @@ const mapStateToProps = (state) => {
   return {
     habits: state.habits,
     user: state.user,
+    id: state.account.id,
   };
 };
 
@@ -88,6 +111,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateHabit: (name, day, value, completed) =>
       dispatch(updateHabit(name, day, value, completed)),
+    setHabits: (habits) => dispatch(setHabits(habits)),
+    setUser: (user) => dispatch(setUser(user)),
   };
 };
 

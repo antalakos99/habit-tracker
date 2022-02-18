@@ -6,11 +6,13 @@ import {
   updateFirstName,
   updateLastName,
   updateProfilePicture,
+  updateUserDataBase,
 } from "../redux";
 import { useState } from "react";
 import { TextField, Button, Avatar } from "@mui/material";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import { useDispatch } from "react-redux";
 
 function UserProfile({
   authorized,
@@ -28,9 +30,10 @@ function UserProfile({
   const [lname, setLname] = useState(lastName);
   const [iage, setAge] = useState(age);
   const [ppic, setPpic] = useState(profilePicture);
-  if (!authorized) {
-    return <Redirect to="/"></Redirect>;
-  }
+  const dispatch = useDispatch();
+  // if (!authorized) {
+  //   return <Redirect to="/"></Redirect>;
+  // }
   return (
     <div>
       <Header
@@ -52,7 +55,10 @@ function UserProfile({
         <Button
           variant="contained"
           size="normal"
-          onClick={() => updateFirstName(fname)}
+          onClick={() => {
+            updateFirstName(fname);
+            dispatch(updateUserDataBase());
+          }}
         >
           Change
         </Button>
@@ -67,7 +73,10 @@ function UserProfile({
         <Button
           variant="contained"
           size="normal"
-          onClick={() => updateLastName(lname)}
+          onClick={() => {
+            updateLastName(lname);
+            dispatch(updateUserDataBase());
+          }}
         >
           Change
         </Button>
@@ -83,7 +92,10 @@ function UserProfile({
         <Button
           variant="contained"
           size="normal"
-          onClick={() => updateAge(iage)}
+          onClick={() => {
+            updateAge(iage);
+            dispatch(updateUserDataBase());
+          }}
         >
           Change
         </Button>
@@ -98,7 +110,10 @@ function UserProfile({
         <Button
           variant="contained"
           size="normal"
-          onClick={() => updateProfilePicture(ppic)}
+          onClick={() => {
+            updateProfilePicture(ppic);
+            dispatch(updateUserDataBase());
+          }}
         >
           Change
         </Button>

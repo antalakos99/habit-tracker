@@ -4,14 +4,20 @@ import { addHabit } from "../redux";
 import { List, ListItem, TextField, Button } from "@mui/material";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import { updateHabitsDataBase } from "../redux";
+import { useDispatch } from "react-redux";
 
 function Habits({ authorized, habits, addHabit, user }) {
   const [name, setName] = useState("");
+  const dispatch = useDispatch();
   // if (!authorized) {
   //   return <Redirect to="/"></Redirect>;
   // }
-  console.log(name);
   const page = "Habits";
+  const handleClick = () => {
+    addHabit(name);
+    dispatch(updateHabitsDataBase());
+  };
   return (
     <div>
       <Header
@@ -33,9 +39,7 @@ function Habits({ authorized, habits, addHabit, user }) {
         variant="contained"
         size="large"
         margin="normal"
-        onClick={() => {
-          addHabit(name);
-        }}
+        onClick={() => handleClick()}
       >
         +
       </Button>
