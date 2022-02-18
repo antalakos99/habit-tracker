@@ -4,7 +4,9 @@ import {
   UPDATE_USER_LAST_NAME,
   UPDATE_USER_AGE,
   UPDATE_USER_PROFILE_PICTURE,
+  SET_USER,
 } from "./userTypes";
+import axios from "axios";
 
 export const createUser = (fname, lname, password, age, proPic) => {
   return {
@@ -53,4 +55,21 @@ export const updateProfilePicture = (proPic) => {
       proPic,
     },
   };
+};
+
+export const setUser = (user) => {
+  return {
+    type: SET_USER,
+    payload: { user },
+  };
+};
+
+export const updateUserDataBase = () => (dispatch, getState) => {
+  const id = getState().account.id;
+  const user = getState().user;
+  axios
+    .patch(`http://localhost:3004/users/${id}`, { user: user })
+    .then((res) => {
+      console.log(res.data);
+    });
 };

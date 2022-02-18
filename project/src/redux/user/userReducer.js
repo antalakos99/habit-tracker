@@ -4,6 +4,7 @@ import {
   UPDATE_USER_LAST_NAME,
   UPDATE_USER_AGE,
   UPDATE_USER_PROFILE_PICTURE,
+  SET_USER,
 } from "./userTypes";
 
 const initialState = {};
@@ -14,7 +15,6 @@ export const userReducer = (state = initialState, action) => {
       return {
         firstName: action.payload.fname,
         lastName: action.payload.lname,
-        password: action.payload.password,
         age: action.payload.age,
         profilePicture: action.payload.proPic,
       };
@@ -38,6 +38,8 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         profilePicture: action.payload.proPic,
       };
+    case SET_USER:
+      return action.payload.user;
     default:
       return state;
   }
