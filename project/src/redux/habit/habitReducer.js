@@ -1,22 +1,6 @@
-import { ADD_HABIT, UPDATE_HABIT } from "./habitTypes";
+import { ADD_HABIT, UPDATE_HABIT, SET_HABITS } from "./habitTypes";
 
-const initialState = [
-  {
-    name: "korcsoja",
-    days: ["X", "X", "X", "", "", "", ""],
-    completed: 3,
-  },
-  {
-    name: "gaming",
-    days: ["X", "", "X", "X", "", "", ""],
-    completed: 3,
-  },
-  {
-    name: "bape",
-    days: ["X", "X", "", "", "", "", ""],
-    completed: 0,
-  },
-];
+const initialState = [];
 
 export const habitReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -38,6 +22,9 @@ export const habitReducer = (state = initialState, action) => {
         } else return habit;
       });
       return newstate;
+    case SET_HABITS: {
+      return action.payload.habits;
+    }
     default:
       return state;
   }
