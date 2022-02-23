@@ -1,22 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { addHabit } from "../redux";
-import { List, ListItem, TextField, Button } from "@mui/material";
+import {
+  List,
+  ListItem,
+  TextField,
+  Button,
+  ListItemText,
+  Paper,
+} from "@mui/material";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { updateHabitsDataBase } from "../redux";
 import { useDispatch } from "react-redux";
+import { Box } from "@mui/system";
 
-function Habits({ authorized, habits, addHabit, user }) {
+function Habits({ habits, addHabit, user }) {
   const [name, setName] = useState("");
   const dispatch = useDispatch();
-  // if (!authorized) {
-  //   return <Redirect to="/"></Redirect>;
-  // }
   const page = "Habits";
   const handleClick = () => {
-    addHabit(name);
-    dispatch(updateHabitsDataBase());
+    let flag = true;
+    habits.map((habit) => {
+      if (habit.name === name) {
+        flag = false;
+      }
+    });
+    if (flag) {
+      addHabit(name);
+      dispatch(updateHabitsDataBase());
+      setName("");
+    } else alert(`You are alredy tracking ${name}`);
   };
   return (
     <div>
@@ -27,27 +41,52 @@ function Habits({ authorized, habits, addHabit, user }) {
         profilePicture={user.profilePicture}
       />
       <SideBar />
-      <TextField
-        id="newHabit"
-        label="New Habbit:"
-        variant="filled"
-        margin="normal"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-      <Button
-        variant="contained"
-        size="large"
-        margin="normal"
-        onClick={() => handleClick()}
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "20rem",
+          position: "absolute",
+          left: "40%",
+          top: "10rem",
+        }}
       >
-        +
-      </Button>
-      <List>
-        {habits.map((habit) => {
-          return <ListItem key={habit.name}>{habit.name}</ListItem>;
-        })}
-      </List>
+        <div>
+          <TextField
+            id="newHabit"
+            label="New Habbit:"
+            variant="filled"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <Button
+            sx={{
+              width: "fit-content",
+              float: "right",
+              height: "3rem",
+            }}
+            variant="contained"
+            size="large"
+            margin="normal"
+            onClick={() => handleClick()}
+          >
+            +
+          </Button>
+        </div>
+        <List>
+          {habits.map((habit) => {
+            return (
+              <ListItem>
+                <ListItemText
+                  key={habit.name}
+                  primary={habit.name}
+                  primaryTypographyProps={{ fontSize: "large" }}
+                ></ListItemText>
+              </ListItem>
+            );
+          })}
+        </List>
+      </Box>
     </div>
   );
 }

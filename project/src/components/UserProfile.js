@@ -9,10 +9,11 @@ import {
   updateUserDataBase,
 } from "../redux";
 import { useState } from "react";
-import { TextField, Button, Avatar } from "@mui/material";
+import { TextField, Button, Paper, Divider } from "@mui/material";
 import Header from "./Header";
 import SideBar from "./SideBar";
 import { useDispatch } from "react-redux";
+import { Box, width } from "@mui/system";
 
 function UserProfile({
   authorized,
@@ -31,11 +32,9 @@ function UserProfile({
   const [iage, setAge] = useState(age);
   const [ppic, setPpic] = useState(profilePicture);
   const dispatch = useDispatch();
-  // if (!authorized) {
-  //   return <Redirect to="/"></Redirect>;
-  // }
   return (
     <div>
+      {!authorized[0] ? <Redirect to="/"></Redirect> : null}
       <Header
         page={page}
         firstName={firstName}
@@ -43,87 +42,125 @@ function UserProfile({
         profilePicture={profilePicture}
       ></Header>
       <SideBar />
-      <form>
-        <TextField
-          id="fname"
-          label="Firstname"
-          variant="filled"
-          margin="normal"
-          value={fname}
-          onChange={(e) => setFname(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          size="normal"
-          onClick={() => {
-            updateFirstName(fname);
-            dispatch(updateUserDataBase());
-          }}
-        >
-          Change
-        </Button>
-        <TextField
-          id="lname"
-          label="Lastname"
-          variant="filled"
-          margin="normal"
-          value={lname}
-          onChange={(e) => setLname(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          size="normal"
-          onClick={() => {
-            updateLastName(lname);
-            dispatch(updateUserDataBase());
-          }}
-        >
-          Change
-        </Button>
-        <TextField
-          id="age"
-          label="Age"
-          type="number"
-          variant="filled"
-          margin="normal"
-          value={iage}
-          onChange={(e) => setAge(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          size="normal"
-          onClick={() => {
-            updateAge(iage);
-            dispatch(updateUserDataBase());
-          }}
-        >
-          Change
-        </Button>
-        <TextField
-          id="ppic"
-          label="Profile picture (paste the url)"
-          variant="filled"
-          margin="normal"
-          value={ppic}
-          onChange={(e) => setPpic(e.target.value)}
-        />
-        <Button
-          variant="contained"
-          size="normal"
-          onClick={() => {
-            updateProfilePicture(ppic);
-            dispatch(updateUserDataBase());
-          }}
-        >
-          Change
-        </Button>
-        <Avatar
-          alt={lname}
-          variant="square"
-          src={ppic}
-          sx={{ width: 56, height: 56 }}
-        />
-      </form>
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          width: "20rem",
+          position: "absolute",
+          left: "40%",
+          top: "10rem",
+        }}
+      >
+        <div>
+          <TextField
+            id="fname"
+            label="Firstname"
+            variant="filled"
+            margin="normal"
+            value={fname}
+            onChange={(e) => setFname(e.target.value)}
+          />
+          <Button
+            sx={{
+              width: "fit-content",
+              float: "right",
+              height: "3rem",
+              marginTop: "1.3rem",
+            }}
+            variant="contained"
+            size="normal"
+            onClick={() => {
+              updateFirstName(fname);
+              dispatch(updateUserDataBase());
+            }}
+          >
+            Change
+          </Button>
+        </div>
+        <Divider />
+        <div>
+          <TextField
+            id="lname"
+            label="Lastname"
+            variant="filled"
+            margin="normal"
+            value={lname}
+            onChange={(e) => setLname(e.target.value)}
+          />
+          <Button
+            sx={{
+              width: "fit-content",
+              float: "right",
+              height: "3rem",
+              marginTop: "1.3rem",
+            }}
+            variant="contained"
+            size="normal"
+            onClick={() => {
+              updateLastName(lname);
+              dispatch(updateUserDataBase());
+            }}
+          >
+            Change
+          </Button>
+        </div>
+        <Divider />
+        <div>
+          <TextField
+            id="age"
+            label="Age"
+            type="number"
+            variant="filled"
+            margin="normal"
+            value={iage}
+            onChange={(e) => setAge(e.target.value)}
+          />
+          <Button
+            sx={{
+              width: "fit-content",
+              float: "right",
+              height: "3rem",
+              marginTop: "1.3rem",
+            }}
+            variant="contained"
+            size="normal"
+            onClick={() => {
+              updateAge(iage);
+              dispatch(updateUserDataBase());
+            }}
+          >
+            Change
+          </Button>
+        </div>
+        <Divider />
+        <div>
+          <TextField
+            id="ppic"
+            label="Profile picture (paste the url)"
+            variant="filled"
+            margin="normal"
+            value={ppic}
+            onChange={(e) => setPpic(e.target.value)}
+          />
+          <Button
+            sx={{
+              width: "fit-content",
+              float: "right",
+              height: "3rem",
+              marginTop: "1.3rem",
+            }}
+            variant="contained"
+            size="normal"
+            onClick={() => {
+              updateProfilePicture(ppic);
+              dispatch(updateUserDataBase());
+            }}
+          >
+            Change
+          </Button>
+        </div>
+      </Box>
     </div>
   );
 }

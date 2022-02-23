@@ -1,16 +1,16 @@
-import React, { useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
+  getHabits,
+  getUser,
   setHabits,
   setUser,
   updateHabit,
   updateHabitsDataBase,
 } from "../redux";
-import { Table, TableCell, TableRow, Button } from "@mui/material";
+import { Table, TableCell, TableRow, Box } from "@mui/material";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 
 function HabitTracker({
@@ -23,16 +23,11 @@ function HabitTracker({
   setUser,
 }) {
   const dispatch = useDispatch();
-  // if (!authorized) {
-  //   return <Redirect to="/"></Redirect>;
-  // }
   const page = "Habit Tracker";
   useEffect(() => {
-    axios.get(`http://localhost:3004/users/${id}`).then((res) => {
-      setHabits(res.data.habits);
-      setUser(res.data.user);
-    });
-  }, []);
+    dispatch(getUser());
+    dispatch(getHabits());
+  }, [id]);
   return (
     <div>
       <Header
@@ -42,59 +37,110 @@ function HabitTracker({
         profilePicture={user.profilePicture}
       ></Header>
       <SideBar />
-      <Table>
-        <thead>
-          <TableRow>
-            <TableCell></TableCell>
-            <TableCell>Monday</TableCell>
-            <TableCell>Tuesday</TableCell>
-            <TableCell>Wednsday</TableCell>
-            <TableCell>Thursday</TableCell>
-            <TableCell>Friday</TableCell>
-            <TableCell>Saturday</TableCell>
-            <TableCell>Sunday</TableCell>
-          </TableRow>
-        </thead>
-        <tbody>
-          {habits.map((habit) => {
-            return (
-              <TableRow
-                key={habit.name}
-                className={
-                  habit.completed > 5
-                    ? "green"
-                    : habit.completed >= 2
-                    ? "orange"
-                    : "red"
-                }
+      <Box
+        className="trackerTable"
+        sx={{
+          position: "absolute",
+          left: "22rem",
+          right: "2rem",
+          top: "10rem",
+          backgroundColor: "#1976d2",
+          borderRadius: "10px",
+        }}
+      >
+        <Table>
+          <thead>
+            <TableRow>
+              <TableCell></TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
               >
-                <TableCell>{habit.name}</TableCell>
-                {habit.days.map((day, index) => {
-                  return (
-                    <TableCell
-                      className="tc"
-                      key={index}
-                      onClick={() => {
-                        updateHabit(
-                          habit.name,
-                          index,
-                          day === "" ? "X" : "",
-                          day === ""
-                            ? (habit.completed += 1)
-                            : (habit.completed -= 1)
-                        );
-                        dispatch(updateHabitsDataBase());
-                      }}
-                    >
-                      {day}
-                    </TableCell>
-                  );
-                })}
-              </TableRow>
-            );
-          })}
-        </tbody>
-      </Table>
+                Monday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Tuesday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Wednsday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Thursday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Friday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Saturday
+              </TableCell>
+              <TableCell
+                sx={{ textAlign: "center", color: "white", fontSize: "large" }}
+              >
+                Sunday
+              </TableCell>
+            </TableRow>
+          </thead>
+          <tbody>
+            {habits.map((habit) => {
+              return (
+                <TableRow
+                  key={habit.name}
+                  className={
+                    habit.completed > 5
+                      ? "green"
+                      : habit.completed >= 2
+                      ? "orange"
+                      : "red"
+                  }
+                >
+                  <TableCell
+                    sx={{
+                      textAlign: "center",
+                      fontSize: "large",
+                    }}
+                  >
+                    {habit.name}
+                  </TableCell>
+                  {habit.days.map((day, index) => {
+                    return (
+                      <TableCell
+                        sx={{
+                          textAlign: "center",
+                          fontSize: "large",
+                        }}
+                        className="tc"
+                        key={index}
+                        onClick={() => {
+                          updateHabit(
+                            habit.name,
+                            index,
+                            day === "" ? "X" : "",
+                            day === ""
+                              ? (habit.completed += 1)
+                              : (habit.completed -= 1)
+                          );
+                          dispatch(updateHabitsDataBase());
+                        }}
+                      >
+                        {day}
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              );
+            })}
+          </tbody>
+        </Table>
+      </Box>
     </div>
   );
 }
