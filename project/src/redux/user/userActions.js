@@ -73,3 +73,10 @@ export const updateUserDataBase = () => (dispatch, getState) => {
       console.log(res.data);
     });
 };
+
+export const getUser = () => (dispatch, getState) => {
+  const id = getState().account.id;
+  axios.get(`http://localhost:3004/users/${id}`).then((res) => {
+    dispatch(setUser(res.data.user));
+  });
+};

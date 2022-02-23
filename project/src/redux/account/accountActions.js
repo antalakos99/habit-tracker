@@ -33,3 +33,23 @@ export const registration = () => (dispatch, getState) => {
     habits: [],
   });
 };
+
+export const getNames = () => () => {
+  let names = [];
+  axios.get("http://localhost:3004/users").then((res) => {
+    res.data.map((account) => {
+      names.push(account.name);
+    });
+  });
+  return names;
+};
+
+export const getAccounts = () => () => {
+  let accounts = [];
+  axios.get("http://localhost:3004/users").then((res) => {
+    res.data.map((account) => {
+      accounts.push(account);
+    });
+  });
+  return accounts;
+};

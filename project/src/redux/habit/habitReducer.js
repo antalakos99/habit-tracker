@@ -22,9 +22,8 @@ export const habitReducer = (state = initialState, action) => {
         } else return habit;
       });
       return newstate;
-    case SET_HABITS: {
+    case SET_HABITS:
       return action.payload.habits;
-    }
     default:
       return state;
   }

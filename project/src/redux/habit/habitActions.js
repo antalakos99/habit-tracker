@@ -40,3 +40,10 @@ export const updateHabitsDataBase = () => (dispatch, getState) => {
       console.log(res.data);
     });
 };
+
+export const getHabits = () => (dispatch, getState) => {
+  const id = getState().account.id;
+  axios.get(`http://localhost:3004/users/${id}`).then((res) => {
+    dispatch(setHabits(res.data.habits));
+  });
+};
