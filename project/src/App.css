@@ -1,0 +1,95 @@
+.body {
+  min-width: 700px;
+}
+
+.red {
+  background-color: red;
+}
+
+.orange {
+  background-color: orange;
+}
+
+.green {
+  background-color: green;
+}
+
+.tc:hover {
+  cursor: pointer;
+  background-color: antiquewhite;
+}
+
+.header {
+  height: 60px;
+}
+
+.pageTitleContainer {
+  margin: auto;
+  width: fit-content;
+}
+
+.profile {
+  float: right;
+  margin-top: 2px;
+  margin-right: 2rem;
+}
+
+#name {
+  float: left;
+  font-size: x-large;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.side-bar {
+  width: 20rem;
+  position: absolute;
+  left: -15rem;
+  top: 0px;
+  height: 100vh;
+  background-color: aquamarine;
+  transition: 100ms;
+}
+
+.side-bar.active {
+  left: 0rem;
+}
+
+.formBox {
+  width: 20rem;
+  margin: auto;
+  margin-top: 25rem;
+}
+
+.wrapper {
+  width: 22rem;
+  margin: auto;
+  height: 17rem;
+}
+
+.right {
+  float: right;
+}
+
+.trackerTable {
+  position: absolute;
+  left: 22rem;
+  right: 2rem;
+  top: 10rem;
+  background-color: "#1976d2";
+  border-radius: "10px";
+}
+
+@media only screen and (max-width: 1000px) {
+  .pageTitleContainer {
+    float: left;
+    margin-left: 7rem;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .trackerTable {
+    margin-left: -15rem;
+    z-index: -1;
+  }
+}
