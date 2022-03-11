@@ -16,7 +16,6 @@ import { useDispatch } from "react-redux";
 import { Box, width } from "@mui/system";
 
 function UserProfile({
-  authorized,
   firstName,
   lastName,
   age,
@@ -34,7 +33,6 @@ function UserProfile({
   const dispatch = useDispatch();
   return (
     <div>
-      {!authorized[0] ? <Redirect to="/"></Redirect> : null}
       <Header
         page={page}
         firstName={firstName}

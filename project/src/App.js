@@ -10,7 +10,6 @@ import { store } from "./redux/store";
 import { useGlobalState } from "./components/Login";
 
 function App() {
-  let authorized = useGlobalState("authorized");
   return (
     <Provider store={store}>
       <Router>
@@ -22,13 +21,13 @@ function App() {
             <Register />
           </Route>
           <Route path="/habits">
-            <Habits authorized={authorized} />
+            <Habits />
           </Route>
           <Route path="/userprofile">
-            <UserProfile authorized={authorized} />
+            <UserProfile />
           </Route>
           <Route path="/habittracker">
-            <HabitTracker authorized={authorized} />
+            <HabitTracker />
           </Route>
           <Route path="*">
             <Login />
